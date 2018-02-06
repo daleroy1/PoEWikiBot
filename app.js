@@ -87,6 +87,7 @@ async function handleItem(name, channel, server) {
                     log.info(new Date().toJSON(), ' ', server, ' - ', name, ' - ', url);
                     //need a way that lets us add an attachment message, currently I can only edit text to it
                     let output = '<' + url + '>';
+                    console.log(output);
                     //if no screenshot, just edit the original message
                     if (result.screenshot == false) {
                         channel
@@ -171,10 +172,10 @@ function convertToUrlString(name) {
 
 function titleCase(str) {
     let excludedWords = ["of", "and", "the", "to", "at", "for"];
-    let words = str.split(" ");
+    let words = str.toLowerCase().split(" ");
     for (var i in  words)
     {
-        if ((i == 0) || !(excludedWords.includes(words[i].toLowerCase()))) {
+        if ((i == 0) || !(excludedWords.includes(words[i]))) {
             words[i] = words[i][0].toUpperCase()+words[i].slice(1,words[i].length);
         } else {
             continue;
