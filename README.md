@@ -26,9 +26,13 @@ The **wikiDiv** is the CSS selector that the bot will screenshot.
 
 ## Known issues
 
-### Performance
+### Running on Ubunutu
 
-The Path of Exile Wiki is quite slow. There is an option set in the config.json file to disable Javascript. This gives 100% increased performance (or thereabouts).  However, it can still take ~5 seconds or so just to query the page and return the item.
+There are two issues with running it on Ubuntu (and possibly other distros).
+
+* Puppeteer won't start in a sandbox, so this feature is diabled, which isn't recommended from a security standpoint.  Remove these options in the puppeteer.launch to enable sandbox mode: '--no-sandbox', '--disable-setuid-sandbox'
+* Puppeteer will also stop sending web pages after a number of requests, which the flag '--disable-dev-shm-usage' should fix.
+
 
 ## Settings
 

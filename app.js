@@ -26,7 +26,8 @@ console.log("Logged in");
     browser = await puppeteer.launch({
         ignoreHTTPSError: true,
         headless: true,
-        handleSIGHUP: true
+        handleSIGHUP: true,
+        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
     });
 })();
 
@@ -158,7 +159,7 @@ async function getImage(url, server) {
         output.success = true;
     }
 
-    page.close();
+    await page.close();
     console.timeEnd('getPage')
     return output;
 
