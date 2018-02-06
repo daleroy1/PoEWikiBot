@@ -14,7 +14,7 @@ var client = new Discord.Client({
     disabledEvents: ["TYPING_START"]
 });
 
-var browswer;
+var browser;
 
 client.token = config.token;
 
