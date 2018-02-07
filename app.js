@@ -8,6 +8,7 @@ const errorLog = require('simple-node-logger').createSimpleFileLogger('./logs/er
 errorLog.setLevel('error');
 
 var config = require("./config.json");
+var browser;
 
 function main() {
     var client = new Discord.Client({
@@ -15,7 +16,6 @@ function main() {
         disabledEvents: ["TYPING_START"]
     });
 
-    var browser;
 
     client.token = config.token;
 
