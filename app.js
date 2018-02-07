@@ -9,50 +9,52 @@ errorLog.setLevel('error');
 
 var config = require("./config.json");
 
-var client = new Discord.Client({
-    disableEveryone: true,
-    disabledEvents: ["TYPING_START"]
-});
-
-var browser;
-
-client.token = config.token;
-
-client.login();
-console.log("Logged in");
-
-//Setup our browswer
-(async () => {
-    browser = await puppeteer.launch({
-        ignoreHTTPSError: true,
-        headless: true,
-        handleSIGHUP: true,
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+function main() {
+    var client = new Discord.Client({
+        disableEveryone: true,
+        disabledEvents: ["TYPING_START"]
     });
-})();
 
-client.on("ready", () => {
-    console.log(`Ready as ${client.user.username}`);
-});
+    var browser;
 
-client.on("message", (message) => {
-    if (message.author.id == client.user.id) {
-        //Disabled this check, as it causes it to not do a check if you post twice in a row.
-        //return;
-    }
-    try {
-        const server = message.guild.name;
+    client.token = config.token;
 
-        let matches = wikiRegex.exec(message.cleanContent);
-        if (matches != null && matches.length > 0) {
-            for (let i = 1; i < matches.length; i++) {
-                handleItem(titleCase(matches[i]), message.channel, server);
-            }
+    client.login();
+    console.log("Logged in");
+
+    //Setup our browswer
+    (async () => {
+        browser = await puppeteer.launch({
+            ignoreHTTPSError: true,
+            headless: true,
+            handleSIGHUP: true,
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage']
+        });
+    })();
+
+    client.on("ready", () => {
+        console.log(`Ready as ${client.user.username}`);
+    });
+
+    client.on("message", (message) => {
+        if (message.author.id == client.user.id) {
+            //Disabled this check, as it causes it to not do a check if you post twice in a row.
+            //return;
         }
-    } catch (error) {
-        errorLog.error(new Date().toJSON(), ' ', error.message);
-    }
-});
+        try {
+            const server = message.guild.name;
+
+            let matches = wikiRegex.exec(message.cleanContent);
+            if (matches != null && matches.length > 0) {
+                for (let i = 1; i < matches.length; i++) {
+                    handleItem(titleCase(matches[i]), message.channel, server);
+                }
+            }
+        } catch (error) {
+            errorLog.error(new Date().toJSON(), ' ', error.message);
+        }
+    });
+}
 
 async function handleItem(name, channel, server) {
     console.log(name)
@@ -182,3 +184,10 @@ function titleCase(str) {
     }
     return words.join(" ");
 };
+
+//idk if this is best practice for node.js, but its the only way to avoid running the bot when running tests
+if (require.main === module) {
+    main();
+}
+
+module.exports.titleCase = titleCase;
