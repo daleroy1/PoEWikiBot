@@ -87,7 +87,6 @@ async function handleItem(name, channel, server) {
                     log.info(new Date().toJSON(), ' ', server, ' - ', name, ' - ', url);
                     //need a way that lets us add an attachment message, currently I can only edit text to it
                     let output = '<' + url + '>';
-                    console.log(output);
                     //if no screenshot, just edit the original message
                     if (result.screenshot == false) {
                         channel
