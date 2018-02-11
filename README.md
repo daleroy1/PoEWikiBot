@@ -44,6 +44,7 @@ token |
 wikiURL | "https://pathofexile.gamepedia.com/"
 wikiDiv | ".infobox-page-container > .item-box"
 wikiInvalidPage | ".noarticletext"
+wikiInfoDiv | ".infocard"
 width  | 2500
 height | 2500
 enableJavascript | false
